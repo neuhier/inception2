@@ -11,7 +11,7 @@ screen_height   = 320
 
 # Fonts
 pygame.font.init()
-menuFont        = pygame.font.Font("fonts/kenvector_future.ttf", 20)
+menuFont        = pygame.font.Font("resources/fonts/kenvector_future.ttf", 20)
 
 # Colors
 BLACK           = (0,0,0)
