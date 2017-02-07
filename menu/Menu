@@ -1,3 +1,14 @@
 #------------------------------+
 # Main Menu class
 #------------------------------+
+from menu.MenuItem import MenuItem
+
+
+class Menu(object):
+    def __init__(self):
+        self.menuState = "mainMenu"
+        self.items = [MenuItem("Start Game", "startGame"),
+                      MenuItem("Change Name", "changeName"),
+                      MenuItem("Key Config", "keyConfig"),
+                      MenuItem("Quit Game", "quitGame")]
+        self.items[0].isSelected = True

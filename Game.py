@@ -2,6 +2,7 @@
 # Game class
 #------------------------------+
 import pygame
+from menu.Menu import Menu
 
 from util import Constants
 
@@ -23,6 +24,7 @@ class Game(object):
         clock = pygame.time.Clock()         # Used to manage how fast the screen updates
         screen = pygame.display.set_mode((self.screen_w, self.screen_h))        # Set up the screen
         pygame.display.set_caption(Constants.game_title)
+        mainMenu = Menu()  # Initialise the main menu
 
         # Start the game loop
         while True:
