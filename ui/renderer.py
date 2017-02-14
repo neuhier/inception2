@@ -6,7 +6,6 @@
 # --------------------------------------------------------------------------------------------------------------+
 import math
 
-
 def renderHUD(screen, player):
     pass
 
@@ -85,3 +84,12 @@ def renderItems(level, screen_width, screen_height, screen):
     level.render_chars.draw(screen)
     level.render_items.draw(screen)
     level.render_projectiles.draw(screen)
+
+
+# --------------------------------------------------------------------------------------------------------------+
+# Function that renders all
+# --------------------------------------------------------------------------------------------------------------+
+def renderAll(level, screen_w, screen_h, screen):
+    renderTextures(level, screen_w, screen_h, screen)
+    renderItems(level, screen_w, screen_h, screen)
+    # renderHUD()

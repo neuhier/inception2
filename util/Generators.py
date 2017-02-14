@@ -1,6 +1,5 @@
 # Contains functions to generate a random level, objects, etc.
-
-from random import random
+import random
 
 from gameObjects.item import Item
 from gameObjects.level import Level
@@ -34,7 +33,7 @@ def generateTree(lvl, w, h):
     # w           = treeSkins[type].get_rect().size[0]
     # h           = treeSkins[type].get_rect().size[1]
 
-    thistree = Item.Item(type, lvl, [x, y], [w, h], tree_touched, False)
+    thistree = Item(type, lvl, [x, y], [w, h], tree_touched, False)
 
     return thistree
 
@@ -60,7 +59,7 @@ def generate_gun_dmg():
 
 
 def generateGun():
-    wpn = Weapon.Weapon("gun", 5, 0.3, generate_gun_dmg)
+    wpn = Weapon("gun", 5, 0.3, generate_gun_dmg)
     return wpn
 
 
@@ -81,7 +80,7 @@ def initRandomLevel(theme, width, height):
     # Add some zombies
     # -------------------------+
     for i in range(0, 10):
-        lvl.chars.add(Villian.Villian("zombie", lvl, [random.randint(1, width), random.randint(1, height - 1)]))
+        lvl.chars.add(Villian("zombie", lvl, [random.randint(1, width), random.randint(1, height - 1)]))
     # -------------------------+
     # Generate Texture grid
     # -------------------------+

@@ -57,7 +57,7 @@ class Level():
     # -----------------------------------------------------------------------+
     def char_fire(self, char):
         # Generate a projectile
-        proj = Projectile.Projectile(self, char)
+        proj = Projectile(self, char)
         self.projectiles.add(proj)
         return proj
 

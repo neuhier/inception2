@@ -3,9 +3,12 @@
 #------------------------------+
 import pygame
 
-import menuListener
-import menuRenderer
+from eventHandlers import menuListener
+from eventHandlers.gameListener import listen
+from gameObjects.item import Item
 from mainMenu import menu
+from ui import menuRenderer
+from ui.renderer import renderAll
 from util import Constants
 
 
@@ -39,14 +42,29 @@ class Game(object):
             if self.state == "mainMenu":
                 menuListener.menuListen(ev, mM, self)
             elif self.state == "playing":
-                self.keyListen(ev)
+                # Move projectiles and villians
+                self.level.update()
+
+                # Input listener for keyboard (should be gamepad later as well)
+                listen(ev, self.level)
+
+                # Collosion detection and handling
+                touched = pygame.sprite.spritecollide(self.level.player, self.level.items, False)
+                for i in touched:
+                    if type(i) is Item:
+                        i.when_touched(self.level.player)
+
+                # Check if projectiles hit villians
+                char_got_hit = pygame.sprite.groupcollide(self.level.chars, self.level.render_projectiles, False, False)
+                for i in char_got_hit:
+                    i.get_hit(char_got_hit[i][0])
             #--------------------------------------------+
             # Render stuff depending on game state
             #--------------------------------------------+
             if self.state == "mainMenu":
                 menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
-                pass
+                renderAll(self.level, self.screen_w, self.screen_w, self.screen)
             #--------------------------------------------+
             # Draw on screen
             #--------------------------------------------+
