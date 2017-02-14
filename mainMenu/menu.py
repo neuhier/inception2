@@ -1,7 +1,7 @@
 #------------------------------+
-# Main Menu.py class
+# Main menu.py class
 #------------------------------+
-from mainMenu.MenuItem import MenuItem
+from mainMenu.menuItem import MenuItem
 
 
 class Menu(object):

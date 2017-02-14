@@ -3,9 +3,9 @@
 #------------------------------+
 import pygame
 
-import MenuListener
-import MenuRenderer
-from mainMenu import Menu
+import menuListener
+import menuRenderer
+from mainMenu import menu
 from util import Constants
 
 
@@ -16,15 +16,16 @@ class Game(object):
     #-----------------------------------------------+
     def __init__(self):
 
-        self.state = "mainMenu"  # Game state: mainMenu, ...
-        self.load_settings()                # Load the current game settings
-        pygame.init()                       # Initialize pygame engine
-        self.font = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
+        self.load_settings()  # Load the current game settings
+
+        pygame.init()  # Initialize pygame engine
+        pygame.display.set_caption(Constants.game_title)
         self.clock = pygame.time.Clock()  # Used to manage how fast the screen updates
         self.screen = pygame.display.set_mode((self.screen_w, self.screen_h))  # Set up the screen
-        pygame.display.set_caption(Constants.game_title)
-
-        mM = Menu.Menu()
+        self.state = "mainMenu"  # Game state: mainMenu, ...
+        self.level = None
+        self.font = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
+        mM = menu.Menu()
 
         # Start the game loop
         while True:
@@ -36,14 +37,14 @@ class Game(object):
             if ev.type == pygame.QUIT:
                 break
             if self.state == "mainMenu":
-                MenuListener.menuListen(ev, mM, self)
+                menuListener.menuListen(ev, mM, self)
             elif self.state == "playing":
                 self.keyListen(ev)
             #--------------------------------------------+
             # Render stuff depending on game state
             #--------------------------------------------+
             if self.state == "mainMenu":
-                MenuRenderer.renderMenu(mM, self)
+                menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
                 pass
             #--------------------------------------------+

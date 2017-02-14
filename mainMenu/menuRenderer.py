@@ -1,5 +1,5 @@
 # ----------------------------------------------------+
-# Menu.py Renderer
+# menu.py Renderer
 # Will draw the mainMenu for a given mainMenu-state on a
 # surface. This might include drawing mainMenu-items
 # or user-input-dialogs, e.g. for key-configuration.

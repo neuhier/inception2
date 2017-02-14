@@ -1,5 +1,5 @@
 # ----------------------------------------------------+
-# Menu.py Item class
+# menu.py Item class
 # A mainMenu item is just a title, image and a command.
 # The command changes the mainMenu state so that the
 # renderer will react to user input.
