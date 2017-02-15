@@ -13,8 +13,8 @@ from gameObjects.weapon import Weapon
 # ----------------------------------------------+
 
 
-def tree_touched(player):
-    player.bounce_back()
+def tree_touched(game):
+    game.level.player.bounce_back()
 
 
 def generateTree(lvl, w, h):
@@ -41,12 +41,13 @@ def generateTree(lvl, w, h):
 # ----------------------------------------------+
 # Goal-Object: Reach the goal to win.
 # ----------------------------------------------+
-def goal_touched(player):
-    print "Player wins!"
+def goal_touched(game):
+    # TODO: Present Statistics, high scores, allow user to enter name,...
+    game.state = "mainMenu"
 
 
 def generateGoal(lvl, pos):
-    thisGoal = Item.Item("teleporter", lvl, pos, [64, 64], goal_touched, False)
+    thisGoal = Item("teleporter", lvl, pos, [64, 64], goal_touched, False)
     return thisGoal
 
 
@@ -73,14 +74,15 @@ def initRandomLevel(theme, width, height):
     # Add player
     # -------------------------+
     player = Player("Imadummy", lvl)  # Add a dummy player
-    player.position = [10, 10]
+    player.position = [1, 1]
     lvl.player = player
     lvl.render_chars.add(player)
     # -------------------------+
     # Add some zombies
     # -------------------------+
-    for i in range(0, 10):
-        lvl.chars.add(Villian("zombie", lvl, [random.randint(1, width), random.randint(1, height - 1)]))
+    for i in range(0, 5):
+        lvl.chars.add(Villian("zombie", lvl, [random.randint(1, width - 1), random.randint(1, height - 1)]))
+
     # -------------------------+
     # Generate Texture grid
     # -------------------------+
@@ -91,9 +93,9 @@ def initRandomLevel(theme, width, height):
     # -------------------------+
     # Add items
     # -------------------------+
-    nitems = width * height / 50
+    nitems = width * height / 150
     for i in range(0, nitems):
         lvl.items.add(generateTree(lvl, 36, 48))
 
-    #    lvl.items.add(BasicObjects.generateGoal(lvl, [10, 10]))
+    lvl.items.add(generateGoal(lvl, [width - 10, height - 10]))
     return lvl

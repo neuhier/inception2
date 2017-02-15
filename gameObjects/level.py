@@ -15,25 +15,28 @@ from gameObjects.projectile import Projectile
 
 
 class Level():
-    theme = "classic"
-    all_textures = {}  # A dictionary storing all texture that will be used in the level (which depends on theme)
-    all_images = {}  # A dictionary of all images used for objects, items, etc.
-    texture_size = []  # The dimension of textures in pixels (widht, height)
-    texture_grid = []  # An 2-dimensional array defining which ground textures are used where in the level
-    items = pygame.sprite.Group()  # A spriteGroup containing all items in the level
-    render_items = pygame.sprite.Group()  # A spriteGroup that contains only the items that should be rendered
-    player = []  # The sprite representing the player
-    chars = pygame.sprite.Group()  # All characters on the map. The first character in the group is always the player
-    render_chars = pygame.sprite.Group()  # All the villians that are currently visible
-    projectiles = pygame.sprite.Group()
-    render_projectiles = pygame.sprite.Group()  # A separate group managing the projectiles
-
     # -----------------------------------------------------------------------+
     # Constructor
     # -----------------------------------------------------------------------+
     def __init__(self, theme, width, height):
+
         self.theme = theme  # Set the theme
+
         self.texture_grid = numpy.zeros((width, height))  # Set level dimension
+        self.all_textures = {}  # A dictionary storing all texture that will be used in the level (which depends on theme)
+        self.all_images = {}  # A dictionary of all images used for objects, items, etc.
+        self.texture_size = []  # The dimension of textures in pixels (widht, height)
+
+        self.items = pygame.sprite.Group()  # A spriteGroup containing all items in the level
+        self.render_items = pygame.sprite.Group()  # A spriteGroup that contains only the items that should be rendered
+
+        self.player = []  # The sprite representing the player
+
+        self.chars = pygame.sprite.Group()  # All villians on the map
+        self.render_chars = pygame.sprite.Group()  # All the villians that are currently visible
+
+        self.projectiles = pygame.sprite.Group()
+        self.render_projectiles = pygame.sprite.Group()  # A separate group managing the projectiles
 
     # -----------------------------------------------------------------------+
     # Load all relevant textures/images for the level - based on its' theme

@@ -20,7 +20,7 @@ def menuListen(evt, menu, game):
             menu.select(True)
         if pressed[Constants.fire]:
             if menu.get_selected() == "startGame":
-                game.level = initRandomLevel("classic", 100, 25)
+                game.level = initRandomLevel("classic", 30, 30)
                 game.state = "playing"
             elif menu.get_selected() == "quitGame":
                 sys.exit()  # Shut down

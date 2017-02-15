@@ -3,6 +3,7 @@
 #------------------------------+
 import pygame
 
+from ai.theBrain import commandVillians
 from eventHandlers import menuListener
 from eventHandlers.gameListener import listen
 from gameObjects.item import Item
@@ -31,8 +32,11 @@ class Game(object):
         mM = menu.Menu()
 
         # Start the game loop
-        while True:
+        self.isPaused = False
+        while not self.isPaused:
+
             self.screen.fill(Constants.BLACK)  # Start with a clear screen every time
+
             #--------------------------------------------+
             # Recognise keyboard input
             #--------------------------------------------+
@@ -42,7 +46,12 @@ class Game(object):
             if self.state == "mainMenu":
                 menuListener.menuListen(ev, mM, self)
             elif self.state == "playing":
-                # Move projectiles and villians
+                # --------------------------------------------+
+                # The Brain controls villians here
+                # --------------------------------------------+
+                commandVillians(self.level)
+
+                # Move projectiles
                 self.level.update()
 
                 # Input listener for keyboard (should be gamepad later as well)
@@ -52,7 +61,7 @@ class Game(object):
                 touched = pygame.sprite.spritecollide(self.level.player, self.level.items, False)
                 for i in touched:
                     if type(i) is Item:
-                        i.when_touched(self.level.player)
+                        i.when_touched(self)
 
                 # Check if projectiles hit villians
                 char_got_hit = pygame.sprite.groupcollide(self.level.chars, self.level.render_projectiles, False, False)
