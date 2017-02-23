@@ -11,7 +11,7 @@ def commandVillians(level):
         rotation_degree = direction(level.player, i) * i.turning_speed
         if abs(rotation_degree) > 0:
             i.turn(rotation_degree)
-            # i.move(level)
+        i.move(level)
 
 
 # Get the angle in which direction the player stands

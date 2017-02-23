@@ -29,6 +29,7 @@ class Game(object):
         self.state = "mainMenu"  # Game state: mainMenu, ...
         self.level = None
         self.font = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
+        self.hud_font = pygame.font.Font("resources/fonts/kenvector_future_thin.ttf", 16)
         mM = menu.Menu()
 
         # Start the game loop
@@ -73,7 +74,7 @@ class Game(object):
             if self.state == "mainMenu":
                 menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
-                renderAll(self.level, self.screen_w, self.screen_w, self.screen)
+                renderAll(self.level, self.screen_w, self.screen_w, self.screen, self.hud_font)
             #--------------------------------------------+
             # Draw on screen
             #--------------------------------------------+

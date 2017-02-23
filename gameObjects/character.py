@@ -7,13 +7,6 @@ import pygame
 
 
 class Character(pygame.sprite.Sprite):
-    name = ""  # Determines img for villians
-    angle = 0  # Angle of view
-    position = []  # Character's position in the level (x, y)
-    speed = None  # Current speed
-    baseimage = None  # The base image, is needed to generate the roated and scaled versions
-    inventory = []  # List of available weapons
-    equiped_weapon = 0  # Which weapon in the inventory is currently equiped
 
     # ------------------------------------+
     # Function to change the angle

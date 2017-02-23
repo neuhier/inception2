@@ -6,8 +6,35 @@
 # --------------------------------------------------------------------------------------------------------------+
 import math
 
-def renderHUD(screen, player):
-    pass
+import util
+
+
+def textPosition(text, n, screen_w):
+    new_x = screen_w - text.get_width()
+    new_y = 0 + text.get_height() * n + (n + 1) * 10
+    return [new_x, new_y]
+
+
+def renderHUD(level, screen, screen_w, font):
+    # Render player info
+    player_htps = font.render("Hitpoints: " + str(level.player.hitpoints[0]) + "/" + str(level.player.hitpoints[1]),
+                              True, util.Constants.WHITE)
+    screen.blit(player_htps, textPosition(player_htps, 0, screen_w))
+    player_pos = font.render(
+        "Pos: [" + str(round(level.player.position[0], 1)) + "/" + str(round(level.player.position[1], 1)) + "]", True,
+        util.Constants.WHITE)
+    screen.blit(player_pos, textPosition(player_pos, 1, screen_w))
+    villian_info = font.render("Villians", True, util.Constants.WHITE)
+    screen.blit(villian_info, textPosition(villian_info, 2, screen_w))
+    counter = 3
+    for i in level.chars:
+        v_angle = font.render("<-" + str(round(i.angle, 1)), True, util.Constants.WHITE)
+        screen.blit(v_angle, textPosition(v_angle, counter, screen_w))
+        counter += 1
+        villian_pos = font.render("* " + str(round(i.position[0], 1)) + "/" + str(round(i.position[1], 1)), True,
+                                  util.Constants.WHITE)
+        screen.blit(villian_pos, textPosition(villian_pos, counter, screen_w))
+        counter += 1
 
 
 # --------------------------------------------------------------------------------------------------------------+
@@ -89,7 +116,7 @@ def renderItems(level, screen_width, screen_height, screen):
 # --------------------------------------------------------------------------------------------------------------+
 # Function that renders all
 # --------------------------------------------------------------------------------------------------------------+
-def renderAll(level, screen_w, screen_h, screen):
+def renderAll(level, screen_w, screen_h, screen, font):
     renderTextures(level, screen_w, screen_h, screen)
     renderItems(level, screen_w, screen_h, screen)
-    # renderHUD()
+    renderHUD(level, screen, screen_w, font)

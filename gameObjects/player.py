@@ -14,7 +14,6 @@ from gameObjects.character import Character
 
 
 class Player(Character):
-    angle = 0  # Viewing angle
     moving_dir = 1  # postive number represent moving to the front, negative number show we last moved back
     position = []  # Player's position in the level (x, y)
     speed = Constants.player_default_speed  # Players current speed
@@ -27,6 +26,7 @@ class Player(Character):
     medipacks = Constants.player_default_medikits  # Number of available medipacks
 
     def __init__(self, name, level):
+        self.angle = 0
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
         self.baseimage = level.all_images[Constants.player_img]
         self.image = self.baseimage
@@ -40,7 +40,7 @@ class Player(Character):
     # Function to move the player
     # -----------------------------------+
     def move(self, direction, lvl):
-        v = (math.cos(self.angle * math.pi / 180), math.sin(self.angle * math.pi / 180))
+        v = (math.cos((self.angle - 90) * math.pi / 180), math.sin((self.angle - 90) * math.pi / 180))
         if direction > 0:
             new_x = self.position[0] + v[0] * self.speed
             new_y = self.position[1] + v[1] * self.speed

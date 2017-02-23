@@ -34,16 +34,15 @@ class Villian(Character):
         self.hitpoints = [100, 100]
 
         self.turning_speed = 5
-        self.speed = 3
+        self.speed = 0.01
 
     # ------------------------------------+
     # Function to move the villian
     # -----------------------------------+
     def move(self, lvl):
-        v = (math.cos(self.angle * math.pi / 180), math.sin(self.angle * math.pi / 180))
+        v = (math.cos((self.angle - 90) * math.pi / 180), math.sin((self.angle - 90) * math.pi / 180))
         new_x = self.position[0] + v[0] * self.speed
         new_y = self.position[1] + v[1] * self.speed
-        print "Y: " + str(new_y) + " X: " + str(new_x)
-        if 0 <= new_x <= len(lvl.texture_grid) and 0 <= new_y <= len(
-                lvl.texture_grid[0]):  # Cannot go outside the level
+        if 0 < new_x <= len(lvl.texture_grid) - 1 and 0 < new_y <= len(
+                lvl.texture_grid[0]) - 1:  # Cannot go outside the level
             self.position = [new_x, new_y]
