@@ -4,10 +4,26 @@
 # --------------------------------------------------------------------------------------------------------------+
 # Render the Heads Up Display (Life points, boosts, weapons, ...)
 # --------------------------------------------------------------------------------------------------------------+
+import datetime
 import math
 
+import pygame
+
+import Constants
 import util
 
+
+def renderLoadingTime(level, screen, width, height):
+    # Frame
+    pygame.draw.rect(screen, Constants.WHITE, (5, 5, width + 2, height + 2), 0)
+    # Calculate loading time left
+    max_loading_time = level.player.inventory[level.player.equiped_weapon].reload_time
+    time_left = max_loading_time - (datetime.datetime.now() - level.player.last_shot).total_seconds()
+    if time_left > 0:
+        pygame.draw.rect(screen, Constants.BLACK, (6,
+                                                   6,
+                                                   width,
+                                                   height / (max_loading_time) * time_left))
 
 def textPosition(text, n, screen_w):
     new_x = screen_w - text.get_width()
@@ -24,6 +40,9 @@ def renderHUD(level, screen, screen_w, font):
         "Pos: [" + str(round(level.player.position[0], 1)) + "/" + str(round(level.player.position[1], 1)) + "]", True,
         util.Constants.WHITE)
     screen.blit(player_pos, textPosition(player_pos, 1, screen_w))
+
+    renderLoadingTime(level, screen, 5, 18)
+    '''
     villian_info = font.render("Villians", True, util.Constants.WHITE)
     screen.blit(villian_info, textPosition(villian_info, 2, screen_w))
     counter = 3
@@ -35,6 +54,7 @@ def renderHUD(level, screen, screen_w, font):
                                   util.Constants.WHITE)
         screen.blit(villian_pos, textPosition(villian_pos, counter, screen_w))
         counter += 1
+    '''
 
 
 # --------------------------------------------------------------------------------------------------------------+

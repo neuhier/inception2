@@ -5,6 +5,7 @@
 # about the level itself and everything that is in the level.
 #
 # ------------------------------------------------------------------------------+
+import datetime
 import os
 
 import numpy
@@ -59,10 +60,14 @@ class Level():
     # Generate a projectile whenever a character fires a shot
     # -----------------------------------------------------------------------+
     def char_fire(self, char):
-        # Generate a projectile
-        proj = Projectile(self, char)
-        self.projectiles.add(proj)
-        return proj
+        # Check reload_time
+        loading_time = (datetime.datetime.now() - char.last_shot).total_seconds()
+        if loading_time > char.inventory[char.equiped_weapon].reload_time:
+            # Generate a projectile
+            proj = Projectile(self, char)
+            self.projectiles.add(proj)
+            char.last_shot = datetime.datetime.now()
+            return proj
 
     # -----------------------------------------------------------------------+
     # Function to be called by the game loop.

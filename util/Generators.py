@@ -60,7 +60,7 @@ def generate_gun_dmg():
 
 
 def generateGun():
-    wpn = Weapon("gun", 5, 0.3, generate_gun_dmg)
+    wpn = Weapon("gun", 5, 0.3, 1, generate_gun_dmg)
     return wpn
 
 

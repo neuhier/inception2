@@ -4,6 +4,7 @@
 # The player class contains all information about the player.
 #
 # ------------------------------------------------------------------------------+
+import datetime
 import math
 
 import pygame
@@ -21,11 +22,11 @@ class Player(Character):
     name = "Jeffrey"
     hitpoints = [Constants.player_default_hitpts,
                  Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
-    inventory = []  # Player's weapons
-    equiped_weapon = 0  # Which weapon in the inventory is currently equiped
     medipacks = Constants.player_default_medikits  # Number of available medipacks
 
     def __init__(self, name, level):
+        self.inventory = []  # Player's weapons
+        self.equiped_weapon = 0  # Which weapon in the inventory is currently equiped
         self.angle = 0
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
         self.baseimage = level.all_images[Constants.player_img]
@@ -33,6 +34,7 @@ class Player(Character):
         self.rect = self.image.get_rect()
         self.rect.centerx = pygame.display.Info().current_w / 2
         self.rect.centery = pygame.display.Info().current_h / 2
+        self.last_shot = datetime.datetime.now()
         # By default add a gun to the inventory
         self.inventory.append(Generators.generateGun())
 
