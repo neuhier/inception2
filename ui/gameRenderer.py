@@ -13,25 +13,36 @@ import Constants
 import util
 
 
-def renderLoadingTime(level, screen, width, height):
-    # Frame
-    pygame.draw.rect(screen, Constants.WHITE, (5, 5, width + 2, height + 2), 0)
+# Render the weapons in the inventory
+def renderInventory(level, screen, x_offset, y_offset):
+    # Background
+    #    pygame.draw.rect(screen, Constants.GRAY, (11,11,50,32))
+    # Show equiped weapon
+    wpn_img = pygame.transform.scale(level.all_images[level.player.get_current_weapon().name], (32, 32))
+    screen.blit(wpn_img, (10 + x_offset, 10 + y_offset))
+
+
+# Render how long it will take to load the weapon
+def renderLoadingTime(level, screen, width, height, x_offset, y_offset):
+    pygame.draw.rect(screen, Constants.WHITE, (5 + x_offset, 5 + y_offset, width + 2, height + 2), 0)
     # Calculate loading time left
     max_loading_time = level.player.get_current_weapon().reload_time
     time_left = max_loading_time - (datetime.datetime.now() - level.player.last_shot).total_seconds()
     if time_left > 0:
-        pygame.draw.rect(screen, Constants.BLACK, (6,
-                                                   6,
+        pygame.draw.rect(screen, Constants.BLACK, (6 + x_offset,
+                                                   6 + y_offset,
                                                    width,
                                                    height / (max_loading_time) * time_left))
 
+
+# Return the position of the text displayed on the top right corner
 def textPosition(text, n, screen_w):
     new_x = screen_w - text.get_width()
     new_y = 0 + text.get_height() * n + (n + 1) * 10
     return [new_x, new_y]
 
 
-def renderHUD(level, screen, screen_w, font):
+def renderHUD(level, screen, screen_w, screen_h, font):
     # Render player info
     player_htps = font.render("Hitpoints: " + str(level.player.hitpoints[0]) + "/" + str(level.player.hitpoints[1]),
                               True, util.Constants.WHITE)
@@ -41,20 +52,9 @@ def renderHUD(level, screen, screen_w, font):
         util.Constants.WHITE)
     screen.blit(player_pos, textPosition(player_pos, 1, screen_w))
 
-    renderLoadingTime(level, screen, 5, 18)
-    '''
-    villian_info = font.render("Villians", True, util.Constants.WHITE)
-    screen.blit(villian_info, textPosition(villian_info, 2, screen_w))
-    counter = 3
-    for i in level.chars:
-        v_angle = font.render("<-" + str(round(i.angle, 1)), True, util.Constants.WHITE)
-        screen.blit(v_angle, textPosition(v_angle, counter, screen_w))
-        counter += 1
-        villian_pos = font.render("* " + str(round(i.position[0], 1)) + "/" + str(round(i.position[1], 1)), True,
-                                  util.Constants.WHITE)
-        screen.blit(villian_pos, textPosition(villian_pos, counter, screen_w))
-        counter += 1
-    '''
+    renderInventory(level, screen, 10, 0)
+    renderLoadingTime(level, screen, 5, 18, 0, 10)
+
 
 
 # --------------------------------------------------------------------------------------------------------------+
@@ -139,4 +139,4 @@ def renderItems(level, screen_width, screen_height, screen):
 def renderAll(level, screen_w, screen_h, screen, font):
     renderTextures(level, screen_w, screen_h, screen)
     renderItems(level, screen_w, screen_h, screen)
-    renderHUD(level, screen, screen_w, font)
+    renderHUD(level, screen, screen_w, screen_h, font)

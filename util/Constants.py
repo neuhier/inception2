@@ -16,6 +16,7 @@ menuFont        = pygame.font.Font("resources/fonts/kenvector_future.ttf", 20)
 # Colors
 BLACK           = (0,0,0)
 WHITE           = (255, 255, 255)
+GRAY = (100, 100, 100)
 RED             = (255,0,0)
 
 # Player default attributs
