@@ -57,12 +57,12 @@ class Level():
         self.texture_size = self.all_textures[self.all_textures.keys()[0]].get_rect().size
 
     # -----------------------------------------------------------------------+
-    # Generate a projectile whenever a character fires a shot
+    # Generate a projectile whenever a player fires a shot
     # -----------------------------------------------------------------------+
     def char_fire(self, char):
         # Check reload_time
         loading_time = (datetime.datetime.now() - char.last_shot).total_seconds()
-        if loading_time > char.inventory[char.equiped_weapon].reload_time:
+        if loading_time > char.get_current_weapon().reload_time:
             # Generate a projectile
             proj = Projectile(self, char)
             self.projectiles.add(proj)

@@ -5,12 +5,12 @@
 # that they are controlled by the game.
 #
 # ------------------------------------------------------------------------------+
-import math
 
 import pygame
 
-import Generators
+from Functions import getMovingVector
 from gameObjects.character import Character
+from weaponGenerators import generateGun
 
 
 class Villian(Character):
@@ -30,7 +30,7 @@ class Villian(Character):
         self.equiped_weapon = 0  # Currently used weapon
 
         # By default add a gun to the inventory
-        self.inventory.append(Generators.generateGun())
+        self.inventory.append(generateGun())
         self.hitpoints = [100, 100]
 
         self.turning_speed = 5
@@ -40,7 +40,7 @@ class Villian(Character):
     # Function to move the villian
     # -----------------------------------+
     def move(self, lvl):
-        v = (math.cos((self.angle - 90) * math.pi / 180), math.sin((self.angle - 90) * math.pi / 180))
+        v = getMovingVector(self)
         new_x = self.position[0] + v[0] * self.speed
         new_y = self.position[1] + v[1] * self.speed
         if 0 < new_x <= len(lvl.texture_grid) - 1 and 0 < new_y <= len(

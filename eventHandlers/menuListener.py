@@ -8,7 +8,7 @@ import sys
 import pygame
 
 import Constants
-from Generators import initRandomLevel
+from levelGenerators import initRandomLevel
 
 
 def menuListen(evt, menu, game):

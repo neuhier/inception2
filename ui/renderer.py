@@ -17,7 +17,7 @@ def renderLoadingTime(level, screen, width, height):
     # Frame
     pygame.draw.rect(screen, Constants.WHITE, (5, 5, width + 2, height + 2), 0)
     # Calculate loading time left
-    max_loading_time = level.player.inventory[level.player.equiped_weapon].reload_time
+    max_loading_time = level.player.get_current_weapon().reload_time
     time_left = max_loading_time - (datetime.datetime.now() - level.player.last_shot).total_seconds()
     if time_left > 0:
         pygame.draw.rect(screen, Constants.BLACK, (6,

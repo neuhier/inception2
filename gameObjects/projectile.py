@@ -7,6 +7,8 @@ import math
 
 import pygame
 
+from Functions import getMovingVector
+
 
 class Projectile(pygame.sprite.Sprite):
     origin = []  # A vector representing x-y-coordinates: At which position in the level was the projectile generated
@@ -21,7 +23,7 @@ class Projectile(pygame.sprite.Sprite):
         self.origin = char.position
         self.angle = char.angle
         # Let the projectile start apart from char
-        v = (math.cos((self.angle - 90) * math.pi / 180), math.sin((self.angle - 90) * math.pi / 180))
+        v = getMovingVector(self)
         new_x = char.position[0] + v[0] * char.image.get_rect().size[0] / lvl.texture_size[0]
         new_y = char.position[1] + v[1] * char.image.get_rect().size[1] / lvl.texture_size[1]
         self.position = [new_x, new_y]

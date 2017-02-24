@@ -5,42 +5,14 @@ from gameObjects.item import Item
 from gameObjects.level import Level
 from gameObjects.player import Player
 from gameObjects.villian import Villian
-from gameObjects.weapon import Weapon
-
-
-# ----------------------------------------------+
-# Function to generate a tree on the level
-# ----------------------------------------------+
-
-
-def tree_touched(game):
-    game.level.player.bounce_back()
-
-
-def generateTree(lvl, w, h):
-    # Generate a name for the object ==> defines skin
-    treeSkins = {}
-    for key, value in lvl.all_images.items():
-        if 'tree' in str(key):
-            treeSkins[key] = value
-    type = treeSkins.keys()[random.randint(0, len(treeSkins.keys()) - 1)]
-
-    # Random position in the level
-    x = random.randint(0, len(lvl.texture_grid) - 1)
-    y = random.randint(0, len(lvl.texture_grid[0]) - 1)
-
-    # No rescaling of images
-    # w           = treeSkins[type].get_rect().size[0]
-    # h           = treeSkins[type].get_rect().size[1]
-
-    thistree = Item(type, lvl, [x, y], [w, h], tree_touched, False)
-
-    return thistree
+from itemGenerators import generateTree
 
 
 # ----------------------------------------------+
 # Goal-Object: Reach the goal to win.
 # ----------------------------------------------+
+
+
 def goal_touched(game):
     # TODO: Present Statistics, high scores, allow user to enter name,...
     game.state = "mainMenu"
@@ -49,20 +21,6 @@ def goal_touched(game):
 def generateGoal(lvl, pos):
     thisGoal = Item("teleporter", lvl, pos, [64, 64], goal_touched, False)
     return thisGoal
-
-
-# ----------------------------------------------+
-# Function to create the basic weapon: Gun
-# ----------------------------------------------+
-def generate_gun_dmg():
-    dmg = random.randint(10, 30)
-    return dmg
-
-
-def generateGun():
-    wpn = Weapon("gun", 5, 0.3, 1, generate_gun_dmg)
-    return wpn
-
 
 # --------------------------------------------------------------------------------------------------------------+
 # Generate a random map - JUST FOR TESTING

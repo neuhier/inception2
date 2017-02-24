@@ -5,13 +5,13 @@
 #
 # ------------------------------------------------------------------------------+
 import datetime
-import math
 
 import pygame
 
 import Constants
-import Generators
+from Functions import getMovingVector
 from gameObjects.character import Character
+from weaponGenerators import generateGun, generateRifle
 
 
 class Player(Character):
@@ -19,7 +19,6 @@ class Player(Character):
     position = []  # Player's position in the level (x, y)
     speed = Constants.player_default_speed  # Players current speed
     baseimage = None  # The base image, is needed to generate the roated and scaled versions
-    name = "Jeffrey"
     hitpoints = [Constants.player_default_hitpts,
                  Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
     medipacks = Constants.player_default_medikits  # Number of available medipacks
@@ -36,13 +35,14 @@ class Player(Character):
         self.rect.centery = pygame.display.Info().current_h / 2
         self.last_shot = datetime.datetime.now()
         # By default add a gun to the inventory
-        self.inventory.append(Generators.generateGun())
+        self.inventory.append(generateGun())
+        self.inventory.append(generateRifle())
 
     # ------------------------------------+
     # Function to move the player
     # -----------------------------------+
     def move(self, direction, lvl):
-        v = (math.cos((self.angle - 90) * math.pi / 180), math.sin((self.angle - 90) * math.pi / 180))
+        v = getMovingVector(self)
         if direction > 0:
             new_x = self.position[0] + v[0] * self.speed
             new_y = self.position[1] + v[1] * self.speed
@@ -60,7 +60,7 @@ class Player(Character):
     # objects.
     # ------------------------------------+
     def bounce_back(self):
-        v = (math.cos(self.angle * math.pi / 180), math.sin(self.angle * math.pi / 180))
+        v = getMovingVector(self)
         new_x = self.position[0] + v[0] * self.speed * self.moving_dir * (
         -1)  # Move just opposite to what we did before
         new_y = self.position[1] + v[1] * self.speed * self.moving_dir * (-1)
@@ -71,3 +71,21 @@ class Player(Character):
     # -----------------------------------+
     def get_current_weapon(self):
         return self.inventory[self.equiped_weapon]
+
+    # ---------------------------------------+
+    # Chose the next weapon in the inventory
+    # ---------------------------------------+
+    def next_weapon(self):
+        if self.equiped_weapon == len(self.inventory) - 1:
+            self.equiped_weapon = 0
+        else:
+            self.equiped_weapon += 1
+
+    # ---------------------------------------+
+    # Chose the previous weapon in the inventory
+    # ---------------------------------------+
+    def previous_weapon(self):
+        if self.equiped_weapon == 0:
+            self.equiped_weapon = len(self.inventory) - 1
+        else:
+            self.equiped_weapon -= 1
