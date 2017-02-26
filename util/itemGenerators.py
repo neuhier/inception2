@@ -3,6 +3,7 @@
 # ----------------------------------------------+
 import random
 
+from boostGenerators import generateSpeedBoost
 from gameObjects.item import Item
 
 
@@ -29,3 +30,26 @@ def generateTree(lvl, w, h):
     thistree = Item(type, lvl, [x, y], [w, h], tree_touched, False)
 
     return thistree
+
+
+# ----------------------------------------------+
+# Function to generate a speedboost-panel
+# ----------------------------------------------+
+
+def generateSpeedBoostPanel(level):
+    def panelTouched(game):
+        sb = generateSpeedBoost()
+        game.activeBoosts.append(sb)
+        sb.startEffect(game.level)
+
+    # Random position in the level
+    x = random.randint(0, len(level.texture_grid) - 1)
+    y = random.randint(0, len(level.texture_grid[0]) - 1)
+
+    # No rescaling
+    w = level.all_images["speedboost"].get_rect().size[0]
+    h = level.all_images["speedboost"].get_rect().size[1]
+
+    thisBoost = Item("speedboost", level, [x, y], [w, h], panelTouched, True)
+
+    return thisBoost

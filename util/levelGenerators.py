@@ -5,7 +5,7 @@ from gameObjects.item import Item
 from gameObjects.level import Level
 from gameObjects.player import Player
 from gameObjects.villian import Villian
-from itemGenerators import generateTree
+from itemGenerators import generateTree, generateSpeedBoostPanel
 
 
 # ----------------------------------------------+
@@ -55,5 +55,9 @@ def initRandomLevel(theme, width, height):
     for i in range(0, nitems):
         lvl.items.add(generateTree(lvl, 36, 48))
 
+    # Boosts
+    lvl.items.add(generateSpeedBoostPanel(lvl))
+
+    # Goal
     lvl.items.add(generateGoal(lvl, [width - 10, height - 10]))
     return lvl

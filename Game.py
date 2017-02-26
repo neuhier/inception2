@@ -1,6 +1,8 @@
 #------------------------------+
 # Game class
 #------------------------------+
+import datetime
+
 import pygame
 
 from ai.theBrain import commandVillians
@@ -30,6 +32,7 @@ class Game(object):
         self.level = None
         self.font = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
         self.hud_font = pygame.font.Font("resources/fonts/kenvector_future_thin.ttf", 16)
+        self.activeBoosts = []
         mM = menu.Menu()
 
         # Start the game loop
@@ -68,6 +71,15 @@ class Game(object):
                 char_got_hit = pygame.sprite.groupcollide(self.level.chars, self.level.render_projectiles, False, False)
                 for i in char_got_hit:
                     i.get_hit(char_got_hit[i][0])
+
+                # --------------------------------------------+
+                # Manage active boosts
+                # --------------------------------------------+
+                for i in self.activeBoosts:
+                    if (datetime.datetime.now() - i.start).total_seconds() >= i.duration:
+                        i.endEffect(self.level)
+                        # TODO: Add message when boost ends
+                        self.activeBoosts.remove(i)
             #--------------------------------------------+
             # Render stuff depending on game state
             #--------------------------------------------+

@@ -6,11 +6,6 @@ import pygame as pygame
 
 
 class Item(pygame.sprite.Sprite):
-    name = "tree"  # Name defines the image that will be loaded
-    position = []  # Position in level
-    collusion_func = None  # A function performing some action (with the player?) when touched by player
-    only_once = True
-    first_touch = True  # For some items it might be relevant if they were touched multiple times
 
     # Constructor
     def __init__(self, name, lvl, position, size, fun, only_once):
@@ -22,6 +17,7 @@ class Item(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.collusion_func = fun
         self.only_once = only_once
+        self.first_touch = True
 
     # ------------------------------------------------------------+
     # Function that is triggered when a player touches the object
