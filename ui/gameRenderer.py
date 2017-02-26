@@ -18,7 +18,7 @@ def renderInventory(level, screen, x_offset, y_offset):
     # Background
     #    pygame.draw.rect(screen, Constants.GRAY, (11,11,50,32))
     # Show equiped weapon
-    wpn_img = pygame.transform.scale(level.all_images[level.player.get_current_weapon().name], (32, 32))
+    wpn_img = level.all_images[level.player.get_current_weapon().name]
     screen.blit(wpn_img, (10 + x_offset, 10 + y_offset))
 
 

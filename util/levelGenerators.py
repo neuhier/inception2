@@ -27,7 +27,7 @@ def generateGoal(lvl, pos):
 # --------------------------------------------------------------------------------------------------------------+
 def initRandomLevel(theme, width, height):
     lvl = Level(theme, width, height)  # New empty level
-    lvl.load_textures()  # Load textures
+    lvl.load_textures(True)  # Load textures
     # -------------------------+
     # Add player
     # -------------------------+

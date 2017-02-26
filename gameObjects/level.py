@@ -42,7 +42,7 @@ class Level():
     # -----------------------------------------------------------------------+
     # Load all relevant textures/images for the level - based on its' theme
     # -----------------------------------------------------------------------+
-    def load_textures(self):
+    def load_textures(self, scale=False):
         # get a list of all files in according directory
         txtr_files = os.listdir("resources/imgs/" + self.theme + "/")
         for i in txtr_files:
@@ -50,9 +50,9 @@ class Level():
                 this_name = i[3:(
                 len(i) - 4)]  # Remove the leading indicator if image is texture or not and remove the image file ending
                 if "bg_" in i:
-                    self.all_textures[this_name] = Functions.load_img("resources/imgs/" + self.theme + "/" + i)
+                    self.all_textures[this_name] = Functions.load_img("resources/imgs/" + self.theme + "/" + i, scale)
                 else:
-                    self.all_images[this_name] = Functions.load_img("resources/imgs/" + self.theme + "/" + i)
+                    self.all_images[this_name] = Functions.load_img("resources/imgs/" + self.theme + "/" + i, scale)
         # Update the texture size
         self.texture_size = self.all_textures[self.all_textures.keys()[0]].get_rect().size
 
