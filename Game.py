@@ -9,6 +9,7 @@ from ai.theBrain import commandVillians
 from eventHandlers import menuListener
 from eventHandlers.gameListener import listen
 from gameObjects.item import Item
+from gameObjects.message import Message
 from mainMenu import menu
 from ui import menuRenderer
 from ui.gameRenderer import renderAll
@@ -33,6 +34,7 @@ class Game(object):
         self.font = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
         self.hud_font = pygame.font.Font("resources/fonts/kenvector_future_thin.ttf", 16)
         self.activeBoosts = []
+        self.activeMessages = [Message("Find the teleporter! Fast!", 3)]
         mM = menu.Menu()
 
         # Start the game loop
@@ -80,13 +82,19 @@ class Game(object):
                         i.endEffect(self.level)
                         # TODO: Add message when boost ends
                         self.activeBoosts.remove(i)
+                # --------------------------------------------+
+                # Manage messages
+                # --------------------------------------------+
+                for i in self.activeMessages:
+                    if i.isDone():
+                        self.activeMessages.remove(i)
             #--------------------------------------------+
             # Render stuff depending on game state
             #--------------------------------------------+
             if self.state == "mainMenu":
                 menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
-                renderAll(self.level, self.screen_w, self.screen_h, self.screen, self.hud_font)
+                renderAll(self, self.screen_w, self.screen_h, self.screen, self.hud_font)
             #--------------------------------------------+
             # Draw on screen
             #--------------------------------------------+

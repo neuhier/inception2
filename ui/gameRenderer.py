@@ -11,9 +11,9 @@ import pygame
 
 import Constants
 import util
+from ui.messageRenderer import renderMessages
 
 
-# Render the weapons in the inventory
 def renderInventory(level, screen, x_offset, y_offset):
     # Background
     #    pygame.draw.rect(screen, Constants.GRAY, (11,11,50,32))
@@ -42,7 +42,7 @@ def textPosition(text, n, screen_w):
     return [new_x, new_y]
 
 
-def renderHUD(level, screen, screen_w, screen_h, font):
+def renderHUD(level, screen, screen_w, font):
     # Render player info
     player_htps = font.render("Hitpoints: " + str(level.player.hitpoints[0]) + "/" + str(level.player.hitpoints[1]),
                               True, util.Constants.WHITE)
@@ -136,7 +136,8 @@ def renderItems(level, screen_width, screen_height, screen):
 # --------------------------------------------------------------------------------------------------------------+
 # Function that renders all
 # --------------------------------------------------------------------------------------------------------------+
-def renderAll(level, screen_w, screen_h, screen, font):
-    renderTextures(level, screen_w, screen_h, screen)
-    renderItems(level, screen_w, screen_h, screen)
-    renderHUD(level, screen, screen_w, screen_h, font)
+def renderAll(game, screen_w, screen_h, screen, font):
+    renderTextures(game.level, screen_w, screen_h, screen)
+    renderItems(game.level, screen_w, screen_h, screen)
+    renderHUD(game.level, screen, screen_w, font)
+    renderMessages(game, screen, screen_w, screen_h, font)

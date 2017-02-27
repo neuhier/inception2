@@ -40,6 +40,7 @@ def generateSpeedBoostPanel(level):
     def panelTouched(game):
         sb = generateSpeedBoost()
         game.activeBoosts.append(sb)
+        game.activeMessages.append(sb.message)
         sb.startEffect(game.level)
 
     # Random position in the level
