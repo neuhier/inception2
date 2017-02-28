@@ -27,7 +27,7 @@ def generateTree(lvl, w, h):
     # w           = treeSkins[type].get_rect().size[0]
     # h           = treeSkins[type].get_rect().size[1]
 
-    thistree = Item(type, lvl, [x, y], [w, h], tree_touched, False)
+    thistree = Item(type, lvl, [x, y], 2, tree_touched, False)
 
     return thistree
 
@@ -51,6 +51,6 @@ def generateSpeedBoostPanel(level):
     w = level.all_images["speedboost"].get_rect().size[0]
     h = level.all_images["speedboost"].get_rect().size[1]
 
-    thisBoost = Item("speedboost", level, [x, y], [w, h], panelTouched, True)
+    thisBoost = Item("speedboost", level, [x, y], 1, panelTouched, True)
 
     return thisBoost

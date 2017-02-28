@@ -12,7 +12,8 @@ class Item(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
         self.name = name
         self.position = position
-        scaled_image = pygame.transform.scale(lvl.all_images[name], size)
+        scaled_image = pygame.transform.scale(lvl.all_images[name], (
+        int(lvl.all_images[name].get_width() * size), int(lvl.all_images[name].get_height() * size)))
         self.image = scaled_image
         self.rect = self.image.get_rect()
         self.collusion_func = fun

@@ -13,5 +13,5 @@ def renderMenu(menu, game):
             printtext = "(+)"
         else:
             printtext = "(   )"
-        txt = game.font.render(printtext + menu.items[i].text, True, Constants.WHITE)
+        txt = game.menuFont.render(printtext + menu.items[i].text, True, Constants.WHITE)
         game.screen.blit(txt, (10, i * txt.get_height() + i * 20))

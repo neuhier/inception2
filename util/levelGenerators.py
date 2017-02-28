@@ -19,15 +19,14 @@ def goal_touched(game):
 
 
 def generateGoal(lvl, pos):
-    thisGoal = Item("teleporter", lvl, pos, [64, 64], goal_touched, False)
+    thisGoal = Item("teleporter", lvl, pos, 2.5, goal_touched, False)
     return thisGoal
 
 # --------------------------------------------------------------------------------------------------------------+
 # Generate a random map - JUST FOR TESTING
 # --------------------------------------------------------------------------------------------------------------+
-def initRandomLevel(theme, width, height):
-    lvl = Level(theme, width, height)  # New empty level
-    lvl.load_textures(True)  # Load textures
+def initRandomLevel(theme, width, height, screen_h):
+    lvl = Level(theme, width, height, screen_h)  # New empty level
     # -------------------------+
     # Add player
     # -------------------------+
