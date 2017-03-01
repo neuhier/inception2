@@ -1,26 +1,11 @@
 # Contains functions to generate a random level, objects, etc.
 import random
 
-from gameObjects.item import Item
 from gameObjects.level import Level
 from gameObjects.player import Player
 from gameObjects.villian import Villian
-from itemGenerators import generateTree, generateSpeedBoostPanel
+from itemGenerators import generateTree, generateSpeedBoostPanel, generateGoal
 
-
-# ----------------------------------------------+
-# Goal-Object: Reach the goal to win.
-# ----------------------------------------------+
-
-
-def goal_touched(game):
-    # TODO: Present Statistics, high scores, allow user to enter name,...
-    game.state = "mainMenu"
-
-
-def generateGoal(lvl, pos):
-    thisGoal = Item("teleporter", lvl, pos, 2.5, goal_touched, False)
-    return thisGoal
 
 # --------------------------------------------------------------------------------------------------------------+
 # Generate a random map - JUST FOR TESTING

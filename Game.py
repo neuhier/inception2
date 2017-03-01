@@ -10,9 +10,11 @@ from eventHandlers import menuListener
 from eventHandlers.gameListener import listen
 from gameObjects.item import Item
 from mainMenu import menu
+from sounds.musicLibrary import MusicController
 from ui import menuRenderer
 from ui.gameRenderer import renderAll
 from util import Constants
+
 
 
 class Game(object):
@@ -26,14 +28,22 @@ class Game(object):
 
         pygame.init()  # Initialize pygame engine
         pygame.display.set_caption(Constants.game_title)
+
         self.clock = pygame.time.Clock()  # Used to manage how fast the screen updates
         self.screen = pygame.display.set_mode((self.screen_w, self.screen_h))  # Set up the screen
+
         self.state = "mainMenu"  # Game state: mainMenu, ...
         self.level = None
-        self.menuFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", 32)
-        self.ingameFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", 16)
+
+        self.menuFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 12))
+        self.ingameFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 18.75))
+
         self.activeBoosts = []
         self.activeMessages = []
+
+        self.musicControl = MusicController("classic")
+        self.musicControl.play(True)
+
         mM = menu.Menu()
 
         # Start the game loop

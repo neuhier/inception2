@@ -6,8 +6,8 @@
 import pygame
 
 game_title      = "Inception"
-screen_width = 800
-screen_height = 600
+screen_width = 1200
+screen_height = 800
 
 # Fonts
 pygame.font.init()
