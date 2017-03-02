@@ -12,7 +12,9 @@ from gameObjects.item import Item
 from mainMenu import menu
 from sounds.musicLibrary import MusicController
 from ui import menuRenderer
-from ui.gameRenderer import renderAll
+from ui.gameRenderer import renderTextures, renderItems
+from ui.hudRenderer import renderHUD
+from ui.messageRenderer import renderMessages
 from util import Constants
 
 
@@ -103,7 +105,12 @@ class Game(object):
             if self.state == "mainMenu":
                 menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
-                renderAll(self, self.screen_w, self.screen_h, self.screen, self.ingameFont)
+
+                renderTextures(self.level, self.screen_w, self.screen_h, self.screen)
+                renderItems(self.level, self.screen_w, self.screen_h, self.screen)
+                renderHUD(self.level, self.screen, self.screen_w, self.ingameFont)
+                renderMessages(self, self.screen, self.screen_w, self.screen_h, self.ingameFont)
+
             #--------------------------------------------+
             # Draw on screen
             #--------------------------------------------+

@@ -4,57 +4,7 @@
 # --------------------------------------------------------------------------------------------------------------+
 # Render the Heads Up Display (Life points, boosts, weapons, ...)
 # --------------------------------------------------------------------------------------------------------------+
-import datetime
 import math
-
-import pygame
-
-import Constants
-import util
-from ui.messageRenderer import renderMessages
-
-
-def renderInventory(level, screen, x_offset, y_offset):
-    # Background
-    #    pygame.draw.rect(screen, Constants.GRAY, (11,11,50,32))
-    # Show equiped weapon
-    wpn_img = level.all_images[level.player.get_current_weapon().name]
-    screen.blit(wpn_img, (10 + x_offset, 10 + y_offset))
-
-
-# Render how long it will take to load the weapon
-def renderLoadingTime(level, screen, width, height, x_offset, y_offset):
-    pygame.draw.rect(screen, Constants.WHITE, (5 + x_offset, 5 + y_offset, width + 2, height + 2), 0)
-    # Calculate loading time left
-    max_loading_time = level.player.get_current_weapon().reload_time
-    time_left = max_loading_time - (datetime.datetime.now() - level.player.last_shot).total_seconds()
-    if time_left > 0:
-        pygame.draw.rect(screen, Constants.BLACK, (6 + x_offset,
-                                                   6 + y_offset,
-                                                   width,
-                                                   height / (max_loading_time) * time_left))
-
-
-# Return the position of the text displayed on the top right corner
-def textPosition(text, n, screen_w):
-    new_x = screen_w - text.get_width()
-    new_y = 0 + text.get_height() * n + (n + 1) * 10
-    return [new_x, new_y]
-
-
-def renderHUD(level, screen, screen_w, font):
-    # Render player info
-    player_htps = font.render("Hitpoints: " + str(level.player.hitpoints[0]) + "/" + str(level.player.hitpoints[1]),
-                              True, util.Constants.WHITE)
-    screen.blit(player_htps, textPosition(player_htps, 0, screen_w))
-    player_pos = font.render(
-        "Pos: [" + str(round(level.player.position[0], 1)) + "/" + str(round(level.player.position[1], 1)) + "]", True,
-        util.Constants.WHITE)
-    screen.blit(player_pos, textPosition(player_pos, 1, screen_w))
-
-    renderInventory(level, screen, 10, 0)
-    renderLoadingTime(level, screen, 5, 18, 0, 10)
-
 
 
 # --------------------------------------------------------------------------------------------------------------+
@@ -131,13 +81,3 @@ def renderItems(level, screen_width, screen_height, screen):
     level.render_chars.draw(screen)
     level.render_items.draw(screen)
     level.render_projectiles.draw(screen)
-
-
-# --------------------------------------------------------------------------------------------------------------+
-# Function that renders all
-# --------------------------------------------------------------------------------------------------------------+
-def renderAll(game, screen_w, screen_h, screen, font):
-    renderTextures(game.level, screen_w, screen_h, screen)
-    renderItems(game.level, screen_w, screen_h, screen)
-    renderHUD(game.level, screen, screen_w, font)
-    renderMessages(game, screen, screen_w, screen_h, font)

@@ -91,10 +91,10 @@ class Level():
     def rescale_images(self, screen_h):
         # Basis is 32x32 pixels for texture tiles at 800x600 screen resolution
         newImgHeight = int(screen_h / 9)
-        newImgWidth = int(self.all_images["player"].get_width() * (
-        float(newImgHeight) / self.all_images["player"].get_height()))  # There needs to be a player-img always
         self.texture_size = [newImgHeight, newImgHeight]
         for i in self.all_textures:
             self.all_textures[i] = pygame.transform.scale(self.all_textures[i], (newImgHeight, newImgHeight))
         for i in self.all_images:
+            newImgWidth = int(self.all_images[i].get_width() * (
+            float(newImgHeight) / self.all_images[i].get_height()))  # There needs to be a player-img always
             self.all_images[i] = pygame.transform.scale(self.all_images[i], (newImgWidth, newImgHeight))
