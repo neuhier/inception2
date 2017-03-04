@@ -4,10 +4,13 @@
 from mainMenu.menuItem import MenuItem
 
 
-class Menu(object):
-    def __init__(self):
+class Menu():
+    def __init__(self, game):
         self.menuState = "mainMenu"
+        self.playerName = game.player.name
         self.items = [MenuItem("Start Game", "startGame"),
+                      MenuItem("New Player", "newPlayer"),
+                      MenuItem("Load Player", "loadPlayer"),
                       MenuItem("Quit Game", "quitGame")]
         self.selected = 0
 

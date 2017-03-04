@@ -52,7 +52,7 @@ class Game(object):
         self.musicControl = MusicController("classic")
         self.musicControl.play(True)
 
-        mM = menu.Menu()
+        mM = menu.Menu(self)
 
         # Start the game loop
         self.isPaused = False
