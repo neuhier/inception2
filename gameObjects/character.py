@@ -23,11 +23,3 @@ class Character(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.baseimage, -(self.angle))  # Rotate
         self.rect.center = orig_xy  # Center around the original position
 
-    # -------------------------------------+
-    # Damage handling function
-    # ------------------------------------+
-    def get_hit(self, projectile):
-        self.hitpoints[0] -= projectile.dmg
-        projectile.kill()
-        if self.hitpoints[0] <= 0:
-            self.kill()

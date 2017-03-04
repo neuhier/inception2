@@ -46,3 +46,13 @@ class Villian(Character):
         if 0 < new_x <= len(lvl.texture_grid) - 1 and 0 < new_y <= len(
                 lvl.texture_grid[0]) - 1:  # Cannot go outside the level
             self.position = [new_x, new_y]
+
+    # -------------------------------------+
+    # Damage handling function
+    # ------------------------------------+
+    def get_hit(self, projectile, game):
+        self.hitpoints[0] -= projectile.dmg
+        projectile.kill()
+        if self.hitpoints[0] <= 0:
+            game.player.ltKills += 1
+            self.kill()

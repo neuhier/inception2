@@ -5,6 +5,7 @@
 #
 # ------------------------------------------------------------------------------+
 import datetime
+import os
 
 import pygame
 
@@ -26,16 +27,7 @@ class Player(Character):
         self.ltLevelFinishes = 0
 
         # Ingame attributes
-        self.inventory = []  # Player's weapons
-        self.equiped_weapon = 0  # Which weapon in the inventory is currently equiped
-        self.angle = 0
-        self.last_shot = datetime.datetime.now()
-        self.moving_dir = 1  # postive number represent moving to the front, negative number show we last moved back
-        self.position = [0, 0]  # Player's position in the level (x, y)
-        self.speed = Constants.player_default_speed  # Players current speed
-        self.hitpoints = [Constants.player_default_hitpts,
-                          Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
-        self.medipacks = Constants.player_default_medikits  # Number of available medipacks
+        self.resetIngameAttributes()
 
         # other stuff
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
@@ -45,9 +37,6 @@ class Player(Character):
         self.rect.centerx = pygame.display.Info().current_w / 2
         self.rect.centery = pygame.display.Info().current_h / 2
 
-        # By default add a gun to the inventory
-        self.inventory.append(generateGun())
-        self.inventory.append(generateRifle())
 
     # ------------------------------------+
     # Function to move the player
@@ -102,17 +91,59 @@ class Player(Character):
             self.equiped_weapon -= 1
 
     # ---------------------------------------+
+    # Reset all temporary attributes
+    # ---------------------------------------+
+    def resetIngameAttributes(self):
+        self.inventory = []  # Player's weapons
+        # By default add a gun to the inventory
+        self.inventory.append(generateGun())
+        self.inventory.append(generateRifle())
+        self.equiped_weapon = 0  # Which weapon in the inventory is currently equiped
+        self.angle = 0
+        self.last_shot = datetime.datetime.now()
+        self.moving_dir = 1  # postive number represent moving to the front, negative number show we last moved back
+        self.position = [0, 0]  # Player's position in the level (x, y)
+        self.speed = Constants.player_default_speed  # Players current speed
+        self.hitpoints = [Constants.player_default_hitpts,
+                          Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
+        self.medipacks = Constants.player_default_medikits  # Number of available medipacks
+
+    # ---------------------------------------+
     # Function to save player in textfile
     # ---------------------------------------+
     def savePlayer(self):
-        saveFile = open(self.name + ".txt", "w+")
+        # TODO: not save the file with character name (use individual ID to make sure no character-conflicts)
+        saveFile = open(os.path.join(os.path.dirname(__file__), '..') + "/resources/save/" + self.name + ".txt", "w+")
+        saveFile.write("name-%s" % self.name + "\n")
+        saveFile.write("kills-%s" % self.ltKills + "\n")
+        saveFile.write("boosts-%s" % self.ltBoosts + "\n")
+        saveFile.write("finishes-%s" % self.ltLevelFinishes + "\n")
+        saveFile.write("deaths-%s" % self.ltDeath + "\n")
+        saveFile.write("shots-%s" % self.ltShots + "\n")
+        saveFile.write("coins-%s" % self.ltCoins + "\n")
+        saveFile.close()
 
 
 # ---------------------------------------+
 # Function to load player information
 # ---------------------------------------+
+def getValue(txt):
+    start = txt.index("-") + 1
+    end = txt.index("\n")
+    return txt[start:end]
+
 def loadPlayer(name, ImgMngr):
-    if name == "default":
+    if name == "default":  # Just for now
         return Player("Neuhier", ImgMngr)
     else:
-        return Player(name, ImgMngr)
+        file = open(os.path.join(os.path.dirname(__file__), '..') + "/resources/save/" + name + ".txt", "r")
+        params = file.readlines()
+        file.close()
+        pl = Player(getValue(params[0]), ImgMngr)
+        pl.ltKills = int(getValue(params[1]))
+        pl.ltBoosts = int(getValue(params[2]))
+        pl.ltLevelFinishes = int(getValue(params[3]))
+        pl.ltDeath = int(getValue(params[4]))
+        pl.ltShots = int(getValue(params[5]))
+        pl.ltCoins = int(getValue(params[6]))
+        return pl

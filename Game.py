@@ -44,7 +44,7 @@ class Game(object):
 
         self.imgMngr = ImageManager("classic")
         self.imgMngr.rescale_images(self.screen_h)
-        self.player = loadPlayer("default", self.imgMngr)
+        self.player = loadPlayer("Neuhier", self.imgMngr)
 
         self.activeBoosts = []
         self.activeMessages = []
@@ -89,7 +89,7 @@ class Game(object):
                 # Check if projectiles hit villians
                 char_got_hit = pygame.sprite.groupcollide(self.level.chars, self.level.render_projectiles, False, False)
                 for i in char_got_hit:
-                    i.get_hit(char_got_hit[i][0])
+                    i.get_hit(char_got_hit[i][0], self)
 
                 # --------------------------------------------+
                 # Manage active boosts
@@ -131,7 +131,6 @@ class Game(object):
     # -----------------------------------------------+
     def load_settings(self):
         #TODO: check if settings.txt exists, if it does => load content
-        self.playername  = "Jeff"
         self.keys = {"up": Constants.up,
                      "down": Constants.down,
                      "left": Constants.left,

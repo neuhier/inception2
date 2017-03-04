@@ -44,6 +44,7 @@ class Level():
         if loading_time > game.player.get_current_weapon().reload_time:
             # Generate a projectile
             proj = Projectile(game, game.player)
+            game.player.ltShots += 1
             self.projectiles.add(proj)
             game.player.last_shot = datetime.datetime.now()
             return proj
