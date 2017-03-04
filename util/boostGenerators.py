@@ -13,11 +13,11 @@ def generateSpeedBoost():
     speedInc = random.randint(2, 2) / 20.0
     duration = random.randint(5, 10)
 
-    def increasePlayerSpeed(level):
-        level.player.speed += speedInc
+    def increasePlayerSpeed(game):
+        game.player.speed += speedInc
 
-    def decreasePlayerSpeed(level):
-        level.player.speed -= speedInc
+    def decreasePlayerSpeed(game):
+        game.player.speed -= speedInc
 
     message = Message(str(duration) + " second speed boost!", 2)
 

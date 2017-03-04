@@ -21,7 +21,8 @@ def menuListen(evt, menu, game):
             menu.select(True)
         if pressed[Constants.fire]:
             if menu.get_selected() == "startGame":
-                game.level = initRandomLevel("classic", 30, 30, game.screen_h)
+                initRandomLevel("classic", 30, 30, game)
+                game.level.render_chars.add(game.player)
                 game.musicControl.play(False)
                 game.activeMessages.append(Message("Find the teleporter! Fast!", 3))
                 game.state = "playing"

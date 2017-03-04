@@ -15,25 +15,36 @@ from weaponGenerators import generateGun, generateRifle
 
 
 class Player(Character):
-    moving_dir = 1  # postive number represent moving to the front, negative number show we last moved back
-    position = []  # Player's position in the level (x, y)
-    speed = Constants.player_default_speed  # Players current speed
-    baseimage = None  # The base image, is needed to generate the roated and scaled versions
-    hitpoints = [Constants.player_default_hitpts,
-                 Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
-    medipacks = Constants.player_default_medikits  # Number of available medipacks
+    def __init__(self, name, ImgMgr):
+        # Global attributes
+        self.name = name
+        self.ltKills = 0
+        self.ltBoosts = 0
+        self.ltDeath = 0
+        self.ltShots = 0
+        self.ltCoins = 0
+        self.ltLevelFinishes = 0
 
-    def __init__(self, name, level):
+        # Ingame attributes
         self.inventory = []  # Player's weapons
         self.equiped_weapon = 0  # Which weapon in the inventory is currently equiped
         self.angle = 0
+        self.last_shot = datetime.datetime.now()
+        self.moving_dir = 1  # postive number represent moving to the front, negative number show we last moved back
+        self.position = [0, 0]  # Player's position in the level (x, y)
+        self.speed = Constants.player_default_speed  # Players current speed
+        self.hitpoints = [Constants.player_default_hitpts,
+                          Constants.player_default_hitpts]  # A list with 2 items. Current_hitpoints and max_hittpoints
+        self.medipacks = Constants.player_default_medikits  # Number of available medipacks
+
+        # other stuff
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
-        self.baseimage = level.all_images[Constants.player_img]
+        self.baseimage = ImgMgr.all_images[Constants.player_img]
         self.image = self.baseimage
         self.rect = self.image.get_rect()
         self.rect.centerx = pygame.display.Info().current_w / 2
         self.rect.centery = pygame.display.Info().current_h / 2
-        self.last_shot = datetime.datetime.now()
+
         # By default add a gun to the inventory
         self.inventory.append(generateGun())
         self.inventory.append(generateRifle())
@@ -89,3 +100,19 @@ class Player(Character):
             self.equiped_weapon = len(self.inventory) - 1
         else:
             self.equiped_weapon -= 1
+
+    # ---------------------------------------+
+    # Function to save player in textfile
+    # ---------------------------------------+
+    def savePlayer(self):
+        saveFile = open(self.name + ".txt", "w+")
+
+
+# ---------------------------------------+
+# Function to load player information
+# ---------------------------------------+
+def loadPlayer(name, ImgMngr):
+    if name == "default":
+        return Player("Neuhier", ImgMngr)
+    else:
+        return Player(name, ImgMngr)

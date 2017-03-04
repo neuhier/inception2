@@ -9,11 +9,13 @@ from ai.theBrain import commandVillians
 from eventHandlers import menuListener
 from eventHandlers.gameListener import listen
 from gameObjects.item import Item
+from gameObjects.player import loadPlayer
 from mainMenu import menu
 from sounds.musicLibrary import MusicController
 from ui import menuRenderer
 from ui.gameRenderer import renderTextures, renderItems
 from ui.hudRenderer import renderHUD
+from ui.imageManager import ImageManager
 from ui.messageRenderer import renderMessages
 from util import Constants
 
@@ -39,6 +41,10 @@ class Game(object):
 
         self.menuFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 12))
         self.ingameFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 18.75))
+
+        self.imgMngr = ImageManager("classic")
+        self.imgMngr.rescale_images(self.screen_h)
+        self.player = loadPlayer("default", self.imgMngr)
 
         self.activeBoosts = []
         self.activeMessages = []
@@ -66,16 +72,16 @@ class Game(object):
                 # --------------------------------------------+
                 # The Brain controls villians here
                 # --------------------------------------------+
-                commandVillians(self.level)
+                commandVillians(self)
 
                 # Move projectiles
                 self.level.update()
 
                 # Input listener for keyboard (should be gamepad later as well)
-                listen(ev, self.level)
+                listen(ev, self)
 
                 # Collosion detection and handling
-                touched = pygame.sprite.spritecollide(self.level.player, self.level.items, False)
+                touched = pygame.sprite.spritecollide(self.player, self.level.items, False)
                 for i in touched:
                     if type(i) is Item:
                         i.when_touched(self)
@@ -90,7 +96,7 @@ class Game(object):
                 # --------------------------------------------+
                 for i in self.activeBoosts:
                     if (datetime.datetime.now() - i.start).total_seconds() >= i.duration:
-                        i.endEffect(self.level)
+                        i.endEffect(self)
                         # TODO: Add message when boost ends
                         self.activeBoosts.remove(i)
                 # --------------------------------------------+
@@ -105,10 +111,9 @@ class Game(object):
             if self.state == "mainMenu":
                 menuRenderer.renderMenu(mM, self)
             elif self.state == "playing":
-
-                renderTextures(self.level, self.screen_w, self.screen_h, self.screen)
-                renderItems(self.level, self.screen_w, self.screen_h, self.screen)
-                renderHUD(self.level, self.screen, self.screen_w, self.ingameFont)
+                renderTextures(self)
+                renderItems(self)
+                renderHUD(self)
                 renderMessages(self, self.screen, self.screen_w, self.screen_h, self.ingameFont)
 
             #--------------------------------------------+
@@ -136,9 +141,3 @@ class Game(object):
                      "prev_w": Constants.prev_w}
         self.screen_w   = Constants.screen_width
         self.screen_h   = Constants.screen_height
-
-    #-----------------------------------------------------+
-    # InputListener: React to keyboard events (joystick?)
-    #-----------------------------------------------------+
-    def keyListen(self, evt):
-        pass

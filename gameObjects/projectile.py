@@ -18,21 +18,21 @@ class Projectile(pygame.sprite.Sprite):
     position = []  # Current level position
     angle = 0  # Shooting direction
 
-    def __init__(self, lvl, char):
+    def __init__(self, game, char):
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
         self.origin = char.position
         self.angle = char.angle
         # Let the projectile start apart from char
         v = getMovingVector(self)
-        new_x = char.position[0] + v[0] * char.image.get_rect().size[0] / lvl.texture_size[0]
-        new_y = char.position[1] + v[1] * char.image.get_rect().size[1] / lvl.texture_size[1]
+        new_x = char.position[0] + v[0] * char.image.get_rect().size[0] / game.imgMngr.texture_size[0]
+        new_y = char.position[1] + v[1] * char.image.get_rect().size[1] / game.imgMngr.texture_size[1]
         self.position = [new_x, new_y]
         current_weapon = char.get_current_weapon()
         self.speed = current_weapon.speed
         self.max_range = current_weapon.max_range
         self.dmg = current_weapon.generate_dmg_fun()
         # Get the right image for this sprite (based on level theme and weapon)
-        self.image = lvl.all_images[current_weapon.name + "_projectile"]
+        self.image = game.imgMngr.all_images[current_weapon.name + "_projectile"]
         self.image = pygame.transform.rotate(self.image, -self.angle)
         self.rect = self.image.get_rect()
 

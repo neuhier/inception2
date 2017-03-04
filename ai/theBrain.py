@@ -5,13 +5,13 @@
 import numpy
 
 
-def commandVillians(level):
+def commandVillians(game):
     # Move all villians in direction of the player
-    for i in level.chars:
-        rotation_degree = direction(level.player, i) * i.turning_speed
+    for i in game.level.chars:
+        rotation_degree = direction(game.player, i) * i.turning_speed
         if abs(rotation_degree) > 0:
             i.turn(rotation_degree)
-        i.move(level)
+        i.move(game.level)
 
 
 # Get the angle in which direction the player stands

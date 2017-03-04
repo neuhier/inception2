@@ -8,13 +8,11 @@ import pygame as pygame
 class Item(pygame.sprite.Sprite):
 
     # Constructor
-    def __init__(self, name, lvl, position, size, fun, only_once):
+    def __init__(self, name, imgMngr, position, fun, only_once):
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
         self.name = name
         self.position = position
-        scaled_image = pygame.transform.scale(lvl.all_images[name], (
-        int(lvl.all_images[name].get_width() * size), int(lvl.all_images[name].get_height() * size)))
-        self.image = scaled_image
+        self.image = imgMngr.all_images[self.name]
         self.rect = self.image.get_rect()
         self.collusion_func = fun
         self.only_once = only_once

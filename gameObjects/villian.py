@@ -16,9 +16,9 @@ from weaponGenerators import generateGun
 class Villian(Character):
 
     # Constructor
-    def __init__(self, name, level, position):
+    def __init__(self, name, imgMgr, position):
         pygame.sprite.Sprite.__init__(self)  # needed for subclasses of sprites
-        self.baseimage = level.all_images[name]  # Load the right image
+        self.baseimage = imgMgr.all_images[name]  # Load the right image
         self.image = self.baseimage
         self.rect = self.image.get_rect()
         self.position = position

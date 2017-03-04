@@ -2,7 +2,6 @@
 import random
 
 from gameObjects.level import Level
-from gameObjects.player import Player
 from gameObjects.villian import Villian
 from itemGenerators import generateTree, generateSpeedBoostPanel, generateGoal
 
@@ -10,38 +9,32 @@ from itemGenerators import generateTree, generateSpeedBoostPanel, generateGoal
 # --------------------------------------------------------------------------------------------------------------+
 # Generate a random map - JUST FOR TESTING
 # --------------------------------------------------------------------------------------------------------------+
-def initRandomLevel(theme, width, height, screen_h):
-    lvl = Level(theme, width, height, screen_h)  # New empty level
-    # -------------------------+
-    # Add player
-    # -------------------------+
-    player = Player("Imadummy", lvl)  # Add a dummy player
-    player.position = [1, 1]
-    lvl.player = player
-    lvl.render_chars.add(player)
+def initRandomLevel(theme, width, height, game):
+    game.level = Level(theme, width, height)  # New empty level
+
     # -------------------------+
     # Add some zombies
     # -------------------------+
     for i in range(0, 5):
-        lvl.chars.add(Villian("zombie", lvl, [random.randint(1, width - 1), random.randint(1, height - 1)]))
+        game.level.chars.add(
+            Villian("zombie", game.imgMngr, [random.randint(1, width - 1), random.randint(1, height - 1)]))
 
     # -------------------------+
     # Generate Texture grid
     # -------------------------+
-    n_tex = len(lvl.all_textures)  # How many different textures are there
+    n_tex = len(game.imgMngr.all_textures)  # How many different textures are there
     for i in range(width - 1):
         for j in range(height - 1):
-            lvl.texture_grid[i, j] = random.randint(0, n_tex - 1)
+            game.level.texture_grid[i, j] = random.randint(0, n_tex - 1)
     # -------------------------+
     # Add items
     # -------------------------+
     nitems = width * height / 150
     for i in range(0, nitems):
-        lvl.items.add(generateTree(lvl, 36, 48))
+        game.level.items.add(generateTree(game))
 
     # Boosts
-    lvl.items.add(generateSpeedBoostPanel(lvl))
+    game.level.items.add(generateSpeedBoostPanel(game))
 
     # Goal
-    lvl.items.add(generateGoal(lvl, [width - 10, height - 10]))
-    return lvl
+    game.level.items.add(generateGoal(game, [width - 10, height - 10]))
