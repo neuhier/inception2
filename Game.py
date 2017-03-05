@@ -17,6 +17,7 @@ from ui.gameRenderer import renderTextures, renderItems
 from ui.hudRenderer import renderHUD
 from ui.imageManager import ImageManager
 from ui.messageRenderer import renderMessages
+from ui.statsRenderer import renderStats
 from util import Constants
 
 
@@ -40,6 +41,7 @@ class Game(object):
         self.level = None
 
         self.menuFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 12))
+        self.smallMenuFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 20))
         self.ingameFont = pygame.font.Font("resources/fonts/kenvector_future.ttf", int(self.screen_h / 18.75))
 
         self.imgMngr = ImageManager("classic")
@@ -68,6 +70,10 @@ class Game(object):
                 break
             if self.state == "mainMenu":
                 menuListener.menuListen(ev, mM, self)
+            elif self.state == "levelEnd":
+                if ev.type == pygame.KEYDOWN:
+                    if pygame.key.get_pressed()[Constants.fire]:
+                        self.state = "mainMenu"
             elif self.state == "playing":
                 # --------------------------------------------+
                 # The Brain controls villians here
@@ -115,7 +121,8 @@ class Game(object):
                 renderItems(self)
                 renderHUD(self)
                 renderMessages(self, self.screen, self.screen_w, self.screen_h, self.ingameFont)
-
+            elif self.state == "levelEnd":
+                renderStats(self)
             #--------------------------------------------+
             # Draw on screen
             #--------------------------------------------+

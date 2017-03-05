@@ -57,7 +57,9 @@ def goal_touched(game):
     game.player.resetIngameAttributes()
     game.player.ltLevelFinishes += 1
     game.player.savePlayer()
-    game.state = "mainMenu"
+    game.activeMessages = []
+    game.activeBoosts = []
+    game.state = "levelEnd"
 
 
 def generateGoal(game, pos):

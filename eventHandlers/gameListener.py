@@ -22,9 +22,9 @@ def listen(event, game):
         game.player.move(1, game.level)
     if pressed[Constants.down]:
         game.player.move(-1, game.level)
-    if pressed[Constants.fire]:
-        game.level.playerShoot(game)  # Let player fire
     if event.type == pygame.KEYDOWN:
+        if pressed[Constants.fire]:
+            game.level.playerShoot(game)  # Let player fire
         if pressed[Constants.next_w]:
             game.player.next_weapon()
         if pressed[Constants.prev_w]:
