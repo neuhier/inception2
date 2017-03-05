@@ -1,0 +1,7 @@
+name-Basti
+kills-1
+boosts-2
+finishes-2
+deaths-0
+shots-10
+coins-0
