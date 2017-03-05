@@ -5,6 +5,7 @@
 #
 # ------------------------------------------------------------------------------+
 import datetime
+import glob
 import os
 
 import pygame
@@ -147,3 +148,17 @@ def loadPlayer(name, ImgMngr):
         pl.ltShots = int(getValue(params[5]))
         pl.ltCoins = int(getValue(params[6]))
         return pl
+
+
+# ---------------------------------------+
+# Get a list with all the saved players
+# ---------------------------------------+
+def loadPlayerList():
+    playerNames = []
+    txt_files = glob.glob(os.path.join(os.path.dirname(__file__), '..') + "/resources/save/*.txt")
+    if len(txt_files) > 0:
+        for i in txt_files:
+            f = open(i, "r")
+            playerNames.append(getValue(f.readlines()[0]))
+            f.close()
+        return playerNames

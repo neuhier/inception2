@@ -8,6 +8,9 @@ import Constants
 
 
 def renderMenu(menu, game):
+    # ------------------+
+    # Main Menu
+    # ------------------+
     if menu.menuState == "mainMenu":
         playerName = game.menuFont.render("Player: " + menu.playerName, True, Constants.RED)
         game.screen.blit(playerName, (game.screen_w - playerName.get_width(), playerName.get_height() / 2))
@@ -20,6 +23,9 @@ def renderMenu(menu, game):
             game.screen.blit(txt,
                              (game.screen_w / 2 - txt.get_width() / 2,
                               game.screen_h / 4 + i * txt.get_height() + i * 20))
+    # ------------------+
+    # Enter Player Name
+    #------------------+
     elif menu.menuState == "enteringPlayerName":
         infoTxt = game.menuFont.render("Enter Name", True, Constants.WHITE)
         game.screen.blit(infoTxt,
@@ -27,3 +33,19 @@ def renderMenu(menu, game):
         playerName = game.menuFont.render(menu.playerName, True, Constants.RED)
         game.screen.blit(playerName, (
         game.screen_w / 2 - playerName.get_width() / 2, game.screen_h / 2 - playerName.get_height() / 2))
+    # ------------------+
+    # Load Player
+    # ------------------+
+    elif menu.menuState == "chosingPlayer":
+        prevItem = game.menuFont.render(menu.submenu.getPrev(), True, Constants.WHITE)
+        game.screen.blit(prevItem,
+                         (game.screen_w / 2 - prevItem.get_width() / 2, game.screen_h / 2 - 2 * prevItem.get_height()))
+
+        selectedItem = game.menuFont.render("* " + menu.submenu.items[menu.submenu.selected].text + " *", True,
+                                            Constants.WHITE)
+        game.screen.blit(selectedItem, (
+        game.screen_w / 2 - selectedItem.get_width() / 2, game.screen_h / 2 - selectedItem.get_height() / 2))
+
+        nextItem = game.menuFont.render(menu.submenu.getNext(), True, Constants.WHITE)
+        game.screen.blit(nextItem,
+                         (game.screen_w / 2 - nextItem.get_width() / 2, game.screen_h / 2 + 1 * nextItem.get_height()))
