@@ -1,7 +1,7 @@
 name-Neuhier
-kills-44
-boosts-23
-finishes-41
+kills-47
+boosts-24
+finishes-42
 deaths-0
-shots-259
+shots-281
 coins-0

@@ -29,7 +29,7 @@ def initRandomLevel(theme, width, height, game):
     # -------------------------+
     # Add items
     # -------------------------+
-    nitems = width * height / 150
+    nitems = int(round(width * height / 150))
     for i in range(0, nitems):
         game.level.items.add(generateTree(game))
 

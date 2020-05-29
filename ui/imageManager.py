@@ -13,7 +13,7 @@ class ImageManager():
         self.all_textures = {}
         self.all_images = {}
         self.load_imgs(theme)
-        self.texture_size = self.all_textures[self.all_textures.keys()[0]].get_rect().size
+        self.texture_size = self.all_textures[list(self.all_textures.keys())[0]].get_rect().size
 
     def load_imgs(self, theme):
         # get a list of all files in according directory
@@ -29,7 +29,7 @@ class ImageManager():
                     self.all_textures[this_name] = texture
                 else:
                     img = Functions.load_img("resources/imgs/" + theme + "/" + i)
-                    img = pygame.transform.scale(img, (img.get_width() * 32 / img.get_height(), 32))
+                    img = pygame.transform.scale(img, (int(round(img.get_width() * 32 / img.get_height())), 32))
                     self.all_images[this_name] = img
 
     # -----------------------------------------------------------------------+

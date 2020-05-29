@@ -33,7 +33,7 @@ def renderTextures(game):
                 0]  # Texture position on the screen relative to player
             screen_pos_y = game.player.rect.centery - (game.player.position[1] - j + .5) * game.imgMngr.texture_size[1]
             game.screen.blit(
-                game.imgMngr.all_textures[game.imgMngr.all_textures.keys()[int(game.level.texture_grid[i, j] - 1)]],
+                game.imgMngr.all_textures[list(game.imgMngr.all_textures.keys())[int(game.level.texture_grid[i, j] - 1)]],
                         (screen_pos_x, screen_pos_y))
 
 

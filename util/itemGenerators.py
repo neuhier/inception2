@@ -17,7 +17,7 @@ def generateTree(game):
     for key, value in game.imgMngr.all_images.items():
         if 'tree' in str(key):
             treeSkins[key] = value
-    type = treeSkins.keys()[random.randint(0, len(treeSkins.keys()) - 1)]
+    type = list(treeSkins.keys())[random.randint(0, len(treeSkins.keys()) - 1)]
 
     # Random position in the level
     x = random.randint(0, len(game.level.texture_grid) - 1)
